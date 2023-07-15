@@ -5,7 +5,13 @@ const path = require("path");
 const outputPath = path.join(__dirname+"\\..\\utils\\", "outputs");
 
 if (!fs.existsSync(outputPath)) {
-  fs.mkdirSync(outputPath, { recursive: true });
+  try {
+    fs.mkdirSync(outputPath, { recursive: true });
+    fs.mkdirSync(outputPath);
+    
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 const executeCpp = (filepath) => {
