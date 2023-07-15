@@ -4,7 +4,16 @@ const asyncHandler = require("express-async-handler");
 const Task = require("../models/Task");
 const { executeCpp, executePy, executeC, executeJS, executePhp } = require("../controllers/codeCtrl");
 
-const taskQueue = new Queue("task-runner-queue", process.env.REDIS_URL);
+const taskQueue = new Queue("task-runner-queue", {
+    redis: {
+        host: process.env.REDIS_HOST,
+        port: parseInt(process.env.REDIS_PORT),
+        username: process.env.USERNAME,
+        password: process.env.PASSWORD,
+        tls: {},
+        connectTimeout: 30000,
+    }
+});
 const NUM_WORKERS = 5;
 
 taskQueue.process(NUM_WORKERS, async ({ data }) => {
