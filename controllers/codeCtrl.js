@@ -7,7 +7,7 @@ const outputPath = path.join(process.cwd(), "\\utils\\outputs");
 try {
   if (!fs.existsSync(outputPath)) {
     fs.mkdirSync(outputPath, { recursive: true });
-    fs.mkdirSync(outputPath);
+    // fs.mkdirSync(outputPath);
   }
 } catch (error) {
   console.log(error);
