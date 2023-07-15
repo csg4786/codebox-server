@@ -4,8 +4,13 @@ const { v4: uuid } = require("uuid");
 
 const dirCodes = path.join(__dirname, "codes");
 
-if (!fs.existsSync(dirCodes)) {
-  fs.mkdirSync(dirCodes, { recursive: true });
+try {
+  if (!fs.existsSync(dirCodes)) {
+    fs.mkdirSync(dirCodes, { recursive: true });
+    fs.mkdirSync(dirCodes);
+  }
+} catch (error) {
+  console.log(error);
 }
 
 const generateFile = async (format, content) => {
