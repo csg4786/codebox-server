@@ -4,7 +4,7 @@ const asyncHandler = require("express-async-handler");
 const Task = require("../models/Task");
 const { executeCpp, executePy, executeC, executeJS, executePhp } = require("../controllers/codeCtrl");
 
-const taskQueue = new Queue("task-runner-queue");
+const taskQueue = new Queue("task-runner-queue", process.env.REDIS_URL);
 const NUM_WORKERS = 5;
 
 taskQueue.process(NUM_WORKERS, async ({ data }) => {

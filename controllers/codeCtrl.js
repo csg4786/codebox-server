@@ -2,7 +2,7 @@ const { exec } = require("child_process");
 const fs = require("fs");
 const path = require("path");
 
-const outputPath = path.join(__dirname+"\\..\\utils\\", "outputs");
+const outputPath = path.join(process.cwd(), "\\utils\\outputs");
 
 try {
   if (!fs.existsSync(outputPath)) {
