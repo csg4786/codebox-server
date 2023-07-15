@@ -7,7 +7,7 @@ const dirCodes = path.join(process.cwd(), "\\utils\\codes");
 try {
   if (!fs.existsSync(dirCodes)) {
     fs.mkdirSync(dirCodes, { recursive: true });
-    // fs.mkdirSync(dirCodes);
+    fs.mkdirSync(dirCodes);
   }
 } catch (error) {
   console.log(error);

@@ -8,8 +8,8 @@ const taskQueue = new Queue("task-runner-queue", {
     redis: {
         host: process.env.REDIS_HOST,
         port: parseInt(process.env.REDIS_PORT),
-        username: process.env.USERNAME,
-        password: process.env.PASSWORD,
+        username: process.env.REDIS_USERNAME,
+        password: process.env.REDIS_PASSWORD,
         tls: {},
         connectTimeout: 30000,
     }
