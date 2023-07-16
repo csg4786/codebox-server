@@ -14,7 +14,9 @@ try {
 }
 
 const executeCpp = (filepath) => {
-  fse.emptyDirSync(outputPath);
+  if (fs.existsSync(outputPath)) {
+    fse.emptyDirSync(outputPath);
+  }
   const taskId = path.basename(filepath).split(".")[0];
   const outPath = path.join(outputPath, `${taskId}.out`);
   // console.log(filepath, outPath, outputPath);
@@ -32,7 +34,9 @@ const executeCpp = (filepath) => {
 };
 
 const executeC = (filepath) => {
-  fse.emptyDirSync(outputPath);
+  if (fs.existsSync(outputPath)) {
+    fse.emptyDirSync(outputPath);
+  }
   const taskId = path.basename(filepath).split(".")[0];
   const outPath = path.join(outputPath, `${taskId}.out`);
   

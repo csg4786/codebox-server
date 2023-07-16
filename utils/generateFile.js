@@ -14,7 +14,9 @@ try {
 }
 
 const generateFile = async (format, content) => {
-  fse.emptyDirSync(dirCodes);
+  if (fs.existsSync(dirCodes)) {
+    fse.emptyDirSync(dirCodes);
+  }
   const jobId = uuid();
   const filename = `${jobId}.${format}`;
   const filepath = path.join(dirCodes, filename);
