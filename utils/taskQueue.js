@@ -16,8 +16,6 @@ const taskQueue = new Queue("task-runner-queue", {
 });
 const NUM_WORKERS = 5;
 
-console.log(parseInt(process.env.REDIS_PORT));
-
 taskQueue.process(NUM_WORKERS, async ({ data }) => {
     // console.log(data);
     const taskId = data.id;

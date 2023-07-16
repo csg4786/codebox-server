@@ -2,12 +2,11 @@ const fs = require("fs");
 const path = require("path");
 const { v4: uuid } = require("uuid");
 
-const dirCodes = path.join(process.cwd(), "\\utils\\codes");
+const dirCodes = path.join(process.cwd(), "/utils/codes");
 
 try {
   if (!fs.existsSync(dirCodes)) {
     fs.mkdirSync(dirCodes, { recursive: true });
-    fs.mkdirSync(dirCodes);
   }
 } catch (error) {
   console.log(error);
