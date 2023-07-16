@@ -1,8 +1,9 @@
 const { exec } = require("child_process");
 const fs = require("fs");
+const fse = require("fs-extra");
 const path = require("path");
 
-const outputPath = path.join(process.cwd(), "/utils/outputs");
+const outputPath = path.join(process.cwd(), "utils", "outputs");
 
 try {
   if (!fs.existsSync(outputPath)) {
@@ -13,10 +14,11 @@ try {
 }
 
 const executeCpp = (filepath) => {
+  fse.emptyDirSync(outputPath);
   const taskId = path.basename(filepath).split(".")[0];
   const outPath = path.join(outputPath, `${taskId}.out`);
   // console.log(filepath, outPath, outputPath);
-
+  
   return new Promise((resolve, reject) => {
     exec(
       `g++ "${filepath}" -o "${outPath}" && "${outPath}"`,
@@ -30,9 +32,10 @@ const executeCpp = (filepath) => {
 };
 
 const executeC = (filepath) => {
+  fse.emptyDirSync(outputPath);
   const taskId = path.basename(filepath).split(".")[0];
   const outPath = path.join(outputPath, `${taskId}.out`);
-
+  
   return new Promise((resolve, reject) => {
     exec(
       `gcc "${filepath}" -o "${outPath}" && "${outPath}"`,
@@ -44,11 +47,9 @@ const executeC = (filepath) => {
     );
   });
 };
-
-
+    
+    
 const executeJS = (filepath) => {
-  // const taskId = path.basename(filepath).split(".")[0];
-  // const outPath = path.join(outputPath, `${taskId}.out`);
 
   return new Promise((resolve, reject) => {
     exec(

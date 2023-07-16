@@ -1,8 +1,9 @@
 const fs = require("fs");
 const path = require("path");
+const fse = require("fs-extra");
 const { v4: uuid } = require("uuid");
 
-const dirCodes = path.join(process.cwd(), "/utils/codes");
+const dirCodes = path.join(process.cwd(), "utils", "codes");
 
 try {
   if (!fs.existsSync(dirCodes)) {
@@ -13,11 +14,12 @@ try {
 }
 
 const generateFile = async (format, content) => {
-    const jobId = uuid();
-    const filename = `${jobId}.${format}`;
-    const filepath = path.join(dirCodes, filename);
-    await fs.writeFileSync(filepath, content);
-    return filepath;
+  fse.emptyDirSync(dirCodes);
+  const jobId = uuid();
+  const filename = `${jobId}.${format}`;
+  const filepath = path.join(dirCodes, filename);
+  fs.writeFileSync(filepath, content);
+  return filepath;
 };
 
 module.exports = { generateFile };
