@@ -3,7 +3,7 @@ const fs = require("fs");
 const fse = require("fs-extra");
 const path = require("path");
 
-const outputPath = path.join(process.cwd(), "utils", "outputs");
+const outputPath = path.resolve(process.cwd(), "utils", "outputs");
 
 try {
   if (!fs.existsSync(outputPath)) {
