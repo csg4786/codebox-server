@@ -3,7 +3,13 @@ const fs = require("fs");
 const fse = require("fs-extra");
 const path = require("path");
 
-const outputPath = path.resolve(process.cwd(), "utils", "outputs");
+let outputPath;
+if (process.env.NODE_ENV && process.env.NODE_ENV == "production") {
+  outputPath = path.resolve("/tmp", "outputs");
+} else {
+  outputPath = path.resolve(process.cwd(), "utils", "outputs");
+}
+console.log(outputPath);
 
 try {
   if (!fs.existsSync(outputPath)) {

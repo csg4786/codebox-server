@@ -3,7 +3,13 @@ const path = require("path");
 const fse = require("fs-extra");
 const { v4: uuid } = require("uuid");
 
-const dirCodes = path.resolve(process.cwd(), "utils", "codes");
+let dirCodes;
+if (process.env.NODE_ENV && process.env.NODE_ENV == "production") {
+  dirCodes = path.resolve("/tmp", "codes");
+} else {
+  dirCodes = path.resolve(process.cwd(), "utils", "codes");
+}
+console.log(dirCodes);
 
 try {
   if (!fs.existsSync(dirCodes)) {
