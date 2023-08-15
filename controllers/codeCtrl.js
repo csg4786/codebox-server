@@ -19,7 +19,7 @@ try {
   console.log(error);
 }
 
-const executeCpp = (filepath) => {
+const executeCpp = (filepath, code) => {
   if (fs.existsSync(outputPath)) {
     fse.emptyDirSync(outputPath);
   }
@@ -29,17 +29,17 @@ const executeCpp = (filepath) => {
   
   return new Promise((resolve, reject) => {
     exec(
-      `g++ "${filepath}" -o "${outPath}" && "${outPath}"`,
+      `g++ -o "${outPath}" -x c++ - && "${outPath}"`,
       (error, stdout, stderr) => {
         error && reject({ error, stderr });
         stderr && reject(stderr);
         resolve(stdout);
       }
-    );
+    ).stdin.end(code);
   });
 };
 
-const executeC = (filepath) => {
+const executeC = (filepath, code) => {
   if (fs.existsSync(outputPath)) {
     fse.emptyDirSync(outputPath);
   }
@@ -48,28 +48,25 @@ const executeC = (filepath) => {
   
   return new Promise((resolve, reject) => {
     exec(
-      `gcc "${filepath}" -o "${outPath}" && "${outPath}"`,
-      (error, stdout, stderr) => {
+      `gcc -o "${outPath}" -x c - && "${outPath}"`, (error, stdout, stderr) => {
         error && reject({ error, stderr });
         stderr && reject(stderr);
         resolve(stdout);
       }
-    );
+    ).stdin.end(code);
   });
 };
     
-    
-const executeJS = (filepath) => {
+const executeJS = (code) => {
 
   return new Promise((resolve, reject) => {
-    exec(
-      `node "${filepath}"`,
-      (error, stdout, stderr) => {
-        error && reject({ error, stderr });
-        stderr && reject(stderr);
-        resolve(stdout);
-      }
-    );
+    const compileJS = exec(`node -`, (error, stdout, stderr) => {
+      error && reject({ error, stderr });
+      stderr && reject(stderr);
+      resolve(stdout);
+    });
+    compileJS.stdin.write(code);
+    compileJS.stdin.end();
   });
 };
 
@@ -88,17 +85,16 @@ const executePhp = (filepath) => {
   });
 };
 
-const executePy = (filepath) => {
+const executePy = (code) => {
 
   return new Promise((resolve, reject) => {
-    exec(
-      `python "${filepath}"`,
-      (error, stdout, stderr) => {
-        error && reject({ error, stderr });
-        stderr && reject(stderr);
-        resolve(stdout);
-      }
-    );
+    const compilePy = exec(`python -"`, (error, stdout, stderr) => {
+      error && reject({ error, stderr });
+      stderr && reject(stderr);
+      resolve(stdout);
+    });
+    compilePy.stdin.write(code);
+    compilePy.stdin.end();
   });
 };
 

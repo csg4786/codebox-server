@@ -4,7 +4,7 @@ const dbConnect = () => {
   mongoose.set("strictQuery", true);
 
   const dbName = "codebox";
-  const dbUrl = process.env.MONGODB_URL1 + dbName + process.env.MONGODB_URL2;
+  const dbUrl = (process.env.NODE_ENV && process.env.NODE_ENV == "production") ? process.env.MONGODB_URL1 + dbName + process.env.MONGODB_URL2 : process.env.MONGODB_URL + dbName;
   try {
     const conn = mongoose.connect(dbUrl);
     console.log("Database Connected!");

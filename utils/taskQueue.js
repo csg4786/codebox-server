@@ -28,15 +28,15 @@ taskQueue.process(NUM_WORKERS, async ({ data }) => {
         let output;
         // console.log(task);
         if (task.language === "cpp") {
-            output = await executeCpp(task.filePath);
+            output = await executeCpp(task.filePath, task.code);
         } else if (task.language === "py") {
-            output = await executePy(task.filePath);
+            output = await executePy(task.code);
         } else if (task.language === "c") {
-            output = await executeC(task.filePath);
+            output = await executeC(task.filePath, task.code);
         } else if (task.language === "js") {
-            output = await executeJS(task.filePath);
+            output = await executeJS(task.code);
         } else if (task.language === "php") {
-            output = await executePhp(task.filePath);
+            output = await executePhp(task.code);
         }
         task["finishedAt"] = new Date();
         task["output"] = output;
