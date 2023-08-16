@@ -88,7 +88,7 @@ const executePhp = (filepath) => {
 const executePy = (code) => {
 
   return new Promise((resolve, reject) => {
-    const compilePy = exec(`python -"`, (error, stdout, stderr) => {
+    const compilePy = exec(`python -`, (error, stdout, stderr) => {
       error && reject({ error, stderr });
       stderr && reject(stderr);
       resolve(stdout);
